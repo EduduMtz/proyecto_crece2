@@ -1,0 +1,21 @@
+{% extends 'crece/plantilla.html' %}
+{% load static %}
+{% block title %}Nueva Peticion{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'crece/css/estilo.css' %}">
+{% endblock %}
+{% block contenido %}
+<section>
+    <div class="container">
+        <h1>Nueva Peticion</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <br>
+            <a class="btn btn-primary" href="{% url 'lista_peticiones' %}" style="margin: 10px;">Volver</a>
+
+        </form>
+    </div>
+</section>
+{% endblock %}

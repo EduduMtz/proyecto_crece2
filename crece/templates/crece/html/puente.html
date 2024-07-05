@@ -1,0 +1,67 @@
+{% extends 'crece/plantilla.html' %}
+{% load static %}
+{% block title %}INFORMACIÓN{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'crece/css/estilo.css' %}">
+{% endblock %}
+
+
+{% block contenido %}
+
+  <div class="container row row-cols-1 row-cols-md-3 g-4" style="margin: 0 auto;">
+    <div class="col">
+      <div class="card h-100">
+        <img src="{% static 'crece/img/logo_cristo.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Canal de YouTube</h5>
+          <p class="card-text"> En este canal podras disfrutar nuestros cultos dominicales cada domingo, incluso podras ver los que estan grabados.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">Link aqui!</small>
+          <a href="https://youtube.com/@icioriente5350?si=jSqvSAXIoL2W-2MV" target="_blank" rel="noopenernoreferrer">Ici Oriente</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card h-100">
+        <img src="{% static 'crece/img/grupo.png' %}" class="card-img-top" alt="Evangelio" style="margin: 0;">
+        <div class="card-body">
+          <h5 class="card-title">Grupos</h5>
+          <p class="card-text">Contamos con diversos grupos para diversas necesidades, desde grupos de estudio hasta grupos de comunidad, e incluso grupos sociales. Sin embargo, lo más importante para todos ellos es compartir el evangelio de Cristo.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">
+            Haz Click para conocer nuestros grupos - 
+            <a href="{% url 'grupos' %}">Grupos</a>
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="{% static 'crece/img/foro.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Foro</h5>
+          <p class="card-text">¡Explora nuestro foro de conversación! <br>
+
+            En nuestro foro, ofrecemos un espacio acogedor y enriquecedor para discutir temas relacionados con la fe cristiana. Ya sea que desees compartir tus reflexiones sobre la Biblia, debatir cuestiones teológicas, o simplemente conectarte con otros hermanos y hermanas en la fe, aquí encontrarás una comunidad comprometida y respetuosa.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">
+            Haz Click para interactuar en nuestro foro - 
+            <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="{% url 'foro' %}">
+              Foro
+              <svg class="bi" aria-hidden="true"><use xlink:href="#arrow-right"></use></svg>
+            </a>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  {% endblock %}

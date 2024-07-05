@@ -1,0 +1,19 @@
+{% extends 'crece/plantilla.html' %}
+{% load static %}
+{% block title %}Eliminar Peticion{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'crece/css/estilo.css' %}">
+{% endblock %}
+{% block contenido %}
+<section>
+    <div class="container">
+        <h1>Eliminar Peticion</h1>
+        <p>¿Está seguro que desea eliminar la petición de {{ peticion.nombre }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <a href="{% url 'lista_peticiones' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

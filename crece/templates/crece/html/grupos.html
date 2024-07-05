@@ -1,0 +1,50 @@
+{% extends 'crece/plantilla.html' %}
+{% load static %}
+{% block title %}GRUPOS{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'crece/css/estilo.css' %}">
+{% endblock %}
+
+
+{% block contenido %}
+  <div class="container row row-cols-1 row-cols-md-3 g-4"  style="margin: 0 auto;">
+    <div class="col">
+      <div class="card h-100">
+        <img src="{% static 'crece/img/grupo.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Grupos en casa</h5>
+          <p class="card-text">Contamos con distintos grupos en casa a los que te puedes inscribir, dinos donde vives y te uniermos al que este mas cercano a ti.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">Encargado: <br> Manuel Rodriguez</small>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="{% static 'crece/img/grupos.png' %}" class="card-img-top" alt="Evangelio">
+        <div class="card-body">
+          <h5 class="card-title">Grupo de Evangelismo</h5>
+          <p class="card-text">Tenemos la tarea como seguidores de Cristo de llevar sus buenas noticias por todo el mundo, por lo que nos juntamos desde las 19 hrs. en el metro las parcelas a predicar de esta hermosa verdad.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">Encargado: <br> Vladimir Diaz</small>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="{% static 'crece/img/foro.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Grupo de Jovenes</h5>
+          <p class="card-text">Si tienes entre 13 y 28 años se parte de nuestro grupo de jovenes, donde nos reunimos todos los sabados desde las 18:30 hrs. a compartir de la palabra del Señor y disfrutar de un buen tiempo de compartir.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">Encargado: <br> Sebastian Benavides</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {% endblock %}

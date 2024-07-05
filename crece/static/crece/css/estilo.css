@@ -1,0 +1,160 @@
+
+/*ESTE ES LA SECCIÓN DE LA BARRA DE NAVEGACIÓN*/
+.nav{
+    background-color: #646262;
+}
+
+.nav-link{
+    color: antiquewhite; /* Establece el color del enlace */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+/* Ajustar opacidad de la barra de menu */
+#navbar.sticky {
+    background-color: rgba(0, 0, 0, 0.4); /* Reducir la opacidad */
+}
+
+.navbar-transparent {
+    background-color: transparent !important; /* Fondo transparente */
+}
+
+.navbar-brand{
+  width: 100x;
+  height: 100px;
+  margin-left: 50px;
+  padding: 0;
+}
+
+/* ESTE ES EL ESTILO PARA EL BODY EN GENERAL */
+
+.cuerpo{
+    background: url(../img/fondo_pagina.jpg);
+    background-position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.txt-versiculo{
+  color: #000000;
+}
+
+#biblia{
+  background-position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+  color: #f1f1f1;
+  margin-bottom: 0px;
+  width: auto;
+  height: 400px;
+}
+
+/* ESTA ES LA SECCION DEL CARRUSEL - INDEX */
+
+.carousel-inner {
+    position: relative;
+  }
+
+.carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000000; /* Color del texto */
+  }
+
+.carousel-text-container, .txt-versiculo{
+
+  color: #ffffff;
+  padding: 15px;
+
+}
+
+.carousel-caption h5 {
+  font-size: 2rem; /* Tamaño del texto */
+  font-weight: bold; /* Peso de la fuente */
+}
+
+.carousel-caption p {
+  padding: 25px;
+  font-size: 1rem; /* Tamaño del texto */
+}*/
+
+.c-item {
+  height: 490px;
+}
+
+.c-img {
+  height: 65vh;
+  width: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+
+/* ESTA SECCION ES PARA LA PAGINA DE FORO */
+
+.card-f{
+  margin-top: 10%;
+  margin-bottom: 10%;
+  background-color: #808080c5;
+  border: 0px;
+}
+
+/* SECCION DE CONTACTO - PETICIONES */
+
+.card-p{
+  background-color: whitesmoke;
+  padding: 25px;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.card-body-p input{
+  background-color: white;
+  color: white;
+  padding: 15px;
+  margin: 2px;
+}
+
+.card-body-p textarea{
+  background-color: white;
+  color: white;
+  height: 150px;
+}
+
+.text-p{
+  text-align: justify;
+  text-justify: inter-word;
+  margin-top: 25px;
+}
+
+#btn-p{
+  background-color: grey;
+  color: white;
+  padding: 15px;
+}
+
+#btn-p:hover{
+  background: rgba(128, 128, 128, 0.49);
+  color: white;
+}
+
+/* ESTA SECCION ES PARA LA PAGINA DE NOSOTROS*/
+.text-n{
+  text-align: justify;
+  text-justify: inter-word;
+  margin-top: 10%;
+  color: antiquewhite;
+  background-color: #64626293;
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.text-n2{
+  text-align: justify;
+  text-justify: inter-word;
+  margin-top: 2%;
+  color: antiquewhite;
+}

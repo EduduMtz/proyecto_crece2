@@ -1,0 +1,122 @@
+{% extends 'crece/plantilla.html' %}
+{% load static %}
+{% block title %}INICIO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'crece/css/estilo.css' %}">
+{% endblock %}
+
+
+{% block contenido %}
+  <!--Carrusel-->
+  <div class="carousel-container">
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      </div>
+      <div class="carousel-inner" >
+        <div class="carousel-item active c-item" data-bs-interval="10000">
+          <img src="{% static 'crece/img/banner_1.jpg' %}" class="d-block c-img" alt="montaña">
+          <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-text-container">
+              <h5 class="text-center">Porque por gracia sois salvos por medio de la fe; y esto no de vosotros,
+                pues es don de Dios; no por obras, para que nadie se gloríe.
+                <p class="text-center">
+                  <a class="txt-versiculo" href="https://www.bible.com/es/verse-of-the-day/EPH.2.8-9/85653?version=149" target="_blank" rel="noopenernoreferrer">
+                    Efesios 2:8-9
+                  </a>
+                </p>
+              </h5>
+              
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item c-item" data-bs-interval="10000">
+          <img src="{% static 'crece/img/banner_5.jpg' %}" class="d-block c-img" alt="alpinista">
+          <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-text-container">
+              <h5 class="text-center">Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en Él cree, no se pierda, mas tenga vida eterna.
+                <p class="text-center">
+                  <a class="txt-versiculo" href="https://www.bible.com/es/verse-of-the-day/JHN.3.16/81617?version=149" target="_blank" rel="noopenernoreferrer">
+                    Juan 3:16
+                  </a>
+                </p>
+              </h5>
+              
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item c-item" data-bs-interval="10000">
+          <img src="{% static 'crece/img/banner_3.jpg' %}" class="d-block c-img" alt="monte">
+          <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-text-container">
+              <h5 class="text-center">Justificados, pues, por la fe, tenemos paz para con Dios por medio de nuestro Señor Jesucristo;
+                <p class="text-center">
+                  <a class="txt-versiculo" href="https://www.bible.com/es/verse-of-the-day/ROM.5.1/86675?version=149" target="_blank" rel="noopenernoreferrer">
+                    Romanos 5:1
+                  </a>
+                </p>
+              </h5>
+              
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item c-item" data-bs-interval="10000">
+          <img src="{% static 'crece/img/banner_4.jpg' %}" class="d-block c-img" alt="mar">
+          <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-text-container">
+              <h5 class="text-center">Porque por gracia sois salvos por medio de la fe; y esto no de vosotros,
+                pues es don de Dios; no por obras, para que nadie se gloríe.
+                <p class="text-center">
+                  <a class="txt-versiculo" href="https://www.bible.com/es/verse-of-the-day/EPH.2.8-9/85653?version=149" target="_blank" rel="noopenernoreferrer">
+                    Efesios 2:8-9
+                  </a>
+                </p>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+  </div>
+  <section id="biblia">
+    <div class="container">
+        <div class="row">
+              <div class="col-md-6">
+                  <div class="secction-content-left">
+                      <p class="fs-5" style="margin-top: 15%; 
+                      margin-bottom: 10%;
+                      text-align: left;">
+                          leer la Biblia ayuda a incrementar nuestra fe en Jesús (Romanos 10:17), nos corrige (Hebreos 4:12) y exhorta a no pecar (Salmos 119:11), nos inspira y brinda ánimo (Romanos 15:4), pero también nos ayuda a tener el conocimiento suficiente sobre Jesús para compartir nuestra fe a otros.</p>
+                  </div>
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                      <a href="https://my.bible.com/es/bible/128/GEN.1.NVI" class="btn btn-outline-light" target="_blank" rel="noopenernoreferrer">
+                        Leer la biblia.
+                      </a>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="secction-content-right">
+                      <img class="rounded float-end" src="{% static 'crece/img/foro.png' %}" alt="bible"
+                      style="width: 400px;
+                            height: auto;
+                            margin-top: 15%;
+                            margin-left: 50%;">
+                  </div>
+            </div>
+          </div>
+      </div>
+  </section>
+
+{% endblock %}

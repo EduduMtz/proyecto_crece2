@@ -1,0 +1,85 @@
+{% extends 'crece/plantilla.html' %}
+{% load static %}
+{% block title %}ACTIVIDADES{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'crece/css/estilo_actividad.css' %}">
+{% endblock %}
+
+{% block contenido %}
+
+
+  <div class="actividdes">
+
+    <img src="{% static 'crece/img/banner_2.jpg' %}" alt="" style="width: 100%; height: 450px;">
+
+  </div>
+
+  <div class="container d-md-flex" style="margin-top: 25px;">
+    
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">CAFÉ</span>
+              <p class="card-content">
+                  Un espacio para compartir un cafe y la palabra de Dios.
+              </p>
+              <a href="https://maps.app.goo.gl/AisLtNFYynhd8pNL6" target="_blank" rel="noopenernoreferrer"><span class="see-more">Ubicación.</span></a>
+          </div>
+          <div class="date-box">
+              <span class="month">Martes</span>
+              <span class="date">7pm</span>
+          </div>
+      </div>
+    </div>
+
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">TREKKING</span>
+              <p class="card-content">
+                  Fortalece tu vida y tu espiritu con hermanos.
+              </p>
+              <a href="https://maps.app.goo.gl/YcQ5MYpbAxDsDieJ8" target="_blank" rel="noopenernoreferrer"><span class="see-more">Ubicación.</span></a>
+          </div>
+          <div class="date-box">
+              <span class="month">Sabado</span>
+              <span class="date">7am</span>
+          </div>
+      </div>
+    </div>
+
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">PREDICA</span>
+              <p class="card-content">
+                  Juntos como guerreros nos disponemos a predicar en las calles.
+              </p>
+              <a href="https://maps.app.goo.gl/94ProdsQWfx2gmtCA" target="_blank" rel="noopenernoreferrer"><span class="see-more">Ubicación.</span></a>
+          </div>
+          <div class="date-box">
+              <span class="month">Jueves</span>
+              <span class="date">8pm</span>
+          </div>
+      </div>
+    </div>
+
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">BASKET</span>
+              <p class="card-content">
+                  Los mas jovenes tienen un espacio para disfrutar el deporte.
+              </p>
+              <a href="https://maps.app.goo.gl/AisLtNFYynhd8pNL6" target="_blank" rel="noopenernoreferrer"><span class="see-more">Ubicación.</span></a>
+          </div>
+          <div class="date-box">
+              <span class="month">Sabado</span>
+              <span class="date">8am</span>
+          </div>
+      </div>
+    </div>
+
+  </div>
+  {% endblock %}
