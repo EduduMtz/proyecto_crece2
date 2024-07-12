@@ -1,0 +1,21 @@
+
+
+###################################### PROYECTO CRECE ###################################
+#########################################################################################
+
+Integrante:
+- Eduardo Martinez
+
+Link GitHub: 
+- https://github.com/EduduMtz/proyecto_crece2.git
+
+Grupo:
+- Numero 6
+
+Sección:
+- PGY3121-006V
+
+S.U Django:
+
+- User: admin
+- Pass: admin

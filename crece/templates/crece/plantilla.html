@@ -47,6 +47,7 @@
                   {{ user.username }}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: transparent !important;">
+                  <a class="nav-link" href="{% url 'foro' %}">Foro</a>
                   <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
                       {% csrf_token %}
                   </form>
@@ -71,14 +72,14 @@
   <!-- esto es para llamar el scrip de jquery, esto permite que hagamos consultas de javascript, AVERIGUAR -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
   crossorigin="anonymous"></script>
-  <script src="{% static 'crece/js/login_script.js' %}"></script>
-  <script src="{% static 'crece/js/scripts.js' %}"></script>
-
+  
   <!-- estos son los dos scrips que utiliza bootstrap para funcionar, AVERIGUAR-->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
   integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
   integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+
+  {% block extra_js %}{% endblock %}
 </body>
 </html>

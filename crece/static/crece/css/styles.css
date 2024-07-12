@@ -1,40 +1,34 @@
-/* Barra de navegación */
-.navbar {
+/*ESTE ES LA SECCIÓN DE LA BARRA DE NAVEGACIÓN*/
+.nav{
     background-color: #646262;
 }
 
-.nav-link {
-    color: antiquewhite; 
-    text-decoration: none;
-}
-
-.navbar-brand {
-    height: 100px;
-    margin-right: 20px;
-    padding: 0;
+.nav-link{
+    color: antiquewhite; /* Establece el color del enlace */
+    text-decoration: none; /* Elimina el subrayado del enlace */
 }
 
 /* Ajustar opacidad de la barra de menu */
 #navbar.sticky {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4); /* Reducir la opacidad */
 }
 
 .navbar-transparent {
-    background-color: transparent !important;
+    background-color: transparent !important; /* Fondo transparente */
 }
 
-/* Header */
-#user-info {
-    color: antiquewhite;
-    padding: 5px;
-    display: flex;
-    align-items: center;
+.navbar-brand{
+  width: 100x;
+  height: 100px;
+  margin-left: 50px;
+  padding: 0;
 }
 
-/* Estilo para el body en general */
-.cuerpo {
+/* ESTE ES EL ESTILO PARA EL BODY EN GENERAL */
+
+.cuerpo{
     background: url(../img/fondo_pagina.jpg);
-    background-position: center;
+    background-position: absolute;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;

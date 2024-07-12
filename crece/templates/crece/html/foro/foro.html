@@ -1,270 +1,231 @@
-{%load static%}
+{% extends 'crece/plantilla.html' %}
+{% load static %}
+{% block title %}FORO{% endblock %}
 
-<!DOCTYPE html>
-<html lang="es">
-  <head>    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'crece/css/styles.css' %}">
-    <link rel="icon" type="image/png" href="{% static 'crece/img/cristo.png' %}">
-    <title>FORO</title>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'crece/css/estilo.css' %}">
+{% endblock %}
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-
-<body class="cuerpo">
-
-  <!--ESTA ES LA CABECERA, LA BARRA DE NAVEGACION-->
-  <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-      <img class="navbar-brand" src="{% static 'crece/img/logo_cristo.png' %}" alt="logo">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto me-0">
-            <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="{% url 'index' %}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'nosotros' %}">Nosotros</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'actividades' %}">Actividades</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'puente' %}">Información</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'lista_peticiones' %}">Peticion</a>
-              </li>
-        </ul>
-        <div id="user-info" class="ms-auto">
-          <span id="usuario"></span>
-      </div>
-      </div>
+{% block contenido %}
+<div class="container mt-5">
+    <h1>Foro</h1>
+    {% if user.is_authenticated %}
+        <button type="button" class="btn btn-primary" id="new-conversation">Nueva Publicación</button>
+    {% endif %}
+    <div id="conversation-list" class="mt-4">
+        {% for post in posts %}
+            <div class="card mb-3" id="post-{{ post.pk }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content }}</p>
+                    <a href="{% url 'post_detail' post.pk %}" class="btn btn-secondary">Ver más</a>
+                    {% if post.author == user or user.is_superuser %}
+                        <a href="{% url 'post_edit' post.pk %}" class="btn btn-primary edit-post" data-post-id="{{ post.pk }}">Editar</a>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'post_delete' post.pk %}" class="btn btn-danger delete-post" data-post-id="{{ post.pk }}">Eliminar</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
     </div>
-  </nav>
-  <section>
-    <div class="nav">
-        <button class="btn btn-light" id="create-conversation">Crear Conversación</button>
-        <button class="btn btn-light" id="edit-message" style="display:none;">Editar Mensaje</button>
-    </div>
-    <div class="container">
-        <div class="sidebar">
-            <ul id="conversation-list">
-                <!-- Conversations will be added here dynamically -->
-            </ul>
-        </div>
-        <div class="chat">
-            <!-- Chat windows will be added here dynamically -->
-        </div>
-    </div>
-    <!-- Modal for creating/editing conversations -->
-    <div id="modal" class="modal">
+</div>
+
+<!-- Modal para Nueva Publicación -->
+<div class="modal fade" id="newPostModal" tabindex="-1" aria-labelledby="newPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modal-title">Título del Modal</h2>
-            <form id="conversation-form">
-                <div class="form-group">
-                    <input type="text" id="title" placeholder="Título (Máximo 50 caracteres)" maxlength="50" required>
-                </div>
-                <div class="form-group">
-                    <textarea id="message" placeholder="Mensaje (Máximo 650 caracteres)" maxlength="650" required></textarea>
-                    <span id="char-count-modal">0 / 650 caracteres</span>
-                </div>
-                <button type="submit">Guardar</button>
-            </form>
+            <div class="modal-header">
+                <h5 class="modal-title" id="newPostModalLabel">Nueva Publicación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="conversation-form" method="post" action="{% url 'post_new' %}">
+                    {% csrf_token %}
+                    <input type="text" id="title" name="title" class="form-control" placeholder="Título" required maxlength="200">
+                    <textarea id="message" name="content" class="form-control mt-2" placeholder="Mensaje" required maxlength="650"></textarea>
+                    <span id="char-count-modal" class="char-count-modal">0 / 650 caracteres</span>
+                    <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+                </form>
+            </div>
         </div>
     </div>
-  </section>
+</div>
 
+<!-- Modal para Editar Publicación -->
+<div class="modal fade" id="editPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPostModalLabel">Editar Publicación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-conversation-form" method="post">
+                    {% csrf_token %}
+                    <input type="text" id="edit-title" name="title" class="form-control" placeholder="Título" required maxlength="200">
+                    <textarea id="edit-message" name="content" class="form-control mt-2" placeholder="Mensaje" required maxlength="650"></textarea>
+                    <span id="edit-char-count-modal" class="char-count-modal">0 / 650 caracteres</span>
+                    <button type="submit" class="btn btn-primary mt-2">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script type="text/javascript">
-    var currentUser = "{{ user.username }}";
-    console.log("Usuario logueado:", currentUser);
-    $(document).ready(function() {
-        $('#usuario').text(currentUser);
-        let conversations = [];
-        let editingConversationId = null;
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    console.log("JavaScript is loaded and running.");
 
-        function renderConversations() {
-        $('#conversation-list').empty();
-        $('.chat').empty();
-        conversations.forEach(convo => {
-            let modifiedInfo = convo.modified ? `<br>Modificado el: ${convo.modified}` : '';
-            $('#conversation-list').append(`<li data-chat="${convo.id}">${convo.title}</li>`);
-            $('.chat').append(`
-                <div id="chat-${convo.id}" class="chat-window">
-                    <div class="chat-header">
-                        <p>
-                            Usuario: @${currentUser}<br>
-                            Creado el: ${convo.created}${modifiedInfo}<br>
-                            Título: ${convo.title}
-                        </p>
-                    </div>
-                    <div class="messages">
-                        <div class="message">
-                            <p>${convo.message}</p>
-                        </div>
-                    </div>
-                    <div class="input-area">
-                        <div id="texto-respuesta">
-                            <input type="text" id="input-${convo.id}" placeholder="Escribe un mensaje..." maxlength="650">
-                            <span class="char-count-input">0 / 650 caracteres</span>
-                        </div>
-                        <button data-chat="${convo.id}">Enviar</button>
-                    </div>
-                </div>
-            `);
-
-            // Render existing responses
-            convo.responses.forEach(response => {
-                let responseElement = $(`
-                    <div class="message">
-                        <p>
-                            Usuario: @${response.user}${response.isAuthor ? " (autor)" : ""}<br>
-                            Enviado el: ${response.dateTime}
-                        </p>
-                        <div class="divider"></div>
-                        <p>${response.message}</p>
-                    </div>
-                `);
-                $('#chat-' + convo.id + ' .messages').append(responseElement);
-            });
-
-            // Add event listener for character count
-            $('#input-' + convo.id).on('input', function() {
-                var maxLength = $(this).attr('maxlength');
-                var currentLength = $(this).val().length;
-                $(this).next('.char-count-input').text(currentLength + ' / ' + maxLength + ' caracteres');
-            });
-        });
-    }
-
-    function openModal(title) {
-        $('#modal-title').text(title);
-        $('#modal').show();
-    }
-
-    function closeModal() {
-        $('#modal').hide();
-        $('#title').val('');
-        $('#message').val('');
-        $('#char-count-modal').text('0 / 650 caracteres');
-        editingConversationId = null;
-    }
-
-    $('.sidebar').on('click', 'li', function() {
-        var chatId = $(this).data('chat');
-        $('.chat-window').hide();
-        $('#chat-' + chatId).show();
-        $('#edit-message').show();
+    $('#new-conversation').click(function() {
+        console.log("Button clicked");
+        $('#newPostModal').modal('show');
     });
 
-    $('.chat').on('click', '.input-area button', function() {
-        var chatId = $(this).data('chat');
-        var input = $('#input-' + chatId);
-        var message = input.val().trim();
-        var dateTime = new Date();
-        var formattedDate = dateTime.toLocaleDateString();
-        var formattedTime = dateTime.toLocaleTimeString();
-
-        if (message) {
-            var convo = conversations.find(c => c.id == chatId);
-            var isAuthor = currentUser === convo.user ? " (autor)" : "";
-            convo.responses.push({
-                user: currentUser,
-                message: message,
-                dateTime: formattedDate + ' ' + formattedTime,
-                isAuthor: currentUser === convo.user
-            });
-
-            var messageElement = $(`
-                <div class="message">
-                    <p>
-                        Usuario: @${currentUser}${isAuthor}<br>
-                        Enviado el: ${formattedDate} ${formattedTime}
-                    </p>
-                    <div class="divider"></div>
-                    <p>${message}</p>
-                </div>
-            `);
-            $('#chat-' + chatId + ' .messages').append(messageElement);
-            input.val('');
-            $('#chat-' + chatId + ' .messages').scrollTop($('#chat-' + chatId + ' .messages')[0].scrollHeight);
-            input.next('.char-count-input').text('0 / 650 caracteres'); // Reset character count
-        }
-    });
-
-    $('#create-conversation').click(function() {
-        openModal('Crear Conversación');
-    });
-
-    $('#edit-message').click(function() {
-        var activeChat = $('.chat-window:visible');
-        var chatId = activeChat.attr('id').split('-')[1];
-        var convo = conversations.find(c => c.id == chatId);
-        editingConversationId = chatId;
-        $('#title').val(convo.title);
-        $('#message').val(convo.message);
-        $('#char-count-modal').text(convo.message.length + ' / 650 caracteres'); // Update character count
-        openModal('Editar Mensaje');
-    });
-
-    $('#modal .close').click(function() {
-        closeModal();
+    $('#newPostModal .btn-close').click(function() {
+        console.log("Modal close button clicked");
+        $('#newPostModal').modal('hide');
     });
 
     $('#conversation-form').submit(function(e) {
         e.preventDefault();
         var title = $('#title').val().trim();
         var message = $('#message').val().trim();
-        var dateTime = new Date();
-        var formattedDate = dateTime.toLocaleDateString();
-        var formattedTime = dateTime.toLocaleTimeString();
 
-        if (editingConversationId) {
-            var convo = conversations.find(c => c.id == editingConversationId);
-            convo.title = title;
-            convo.message = message;
-            convo.modified = formattedDate + ' ' + formattedTime;
-        } else {
-            var newConvo = {
-                id: conversations.length + 1,
-                user: currentUser,
+        if (title && message) {
+            $.post("{% url 'post_new' %}", {
                 title: title,
-                message: message,
-                created: formattedDate,
-                responses: []
-            };
-            conversations.push(newConvo);
+                content: message,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            }).done(function(data) {
+                console.log("Response data: ", data);
+                if (data.success) {
+                    var newConvo = `
+                        <div class="card mb-3" id="post-${data.post_id}">
+                            <div class="card-body">
+                                <h5 class="card-title">${data.title}</h5>
+                                <p class="card-text">${data.content}</p>
+                                <a href="/crece/post/${data.post_id}/" class="btn btn-secondary">Ver más</a>
+                                <a href="/crece/post/${data.post_id}/edit/" class="btn btn-primary edit-post" data-post-id="${data.post_id}">Editar</a>
+                                {% if user.is_superuser %}
+                                    <a href="/crece/post/${data.post_id}/delete/" class="btn btn-danger delete-post" data-post-id="${data.post_id}">Eliminar</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    `;
+                    $('#conversation-list').prepend(newConvo);
+                    $('#newPostModal').modal('hide');
+                    $('#conversation-form')[0].reset();  // Limpiar el formulario
+                    $('#char-count-modal').text('0 / 650 caracteres');  // Restablecer el contador de caracteres
+                } else {
+                    alert("Ocurrió un error al guardar la publicación.");
+                }
+            }).fail(function(xhr, status, error) {
+                console.error("Error en la solicitud: ", xhr.responseText);
+                alert("Error en la solicitud: " + error);
+            });
+        } else {
+            alert("Ambos campos son obligatorios.");
         }
-
-        renderConversations();
-        closeModal();
     });
 
-    // Initial render
-    renderConversations();
-
-    // Character count for modal message
     $('#message').on('input', function() {
         var maxLength = $(this).attr('maxlength');
         var currentLength = $(this).val().length;
         $('#char-count-modal').text(currentLength + ' / ' + maxLength + ' caracteres');
     });
-});
-  </script>
-  
 
-  <!-- estos son los dos scrips que utiliza bootstrap para funcionar, AVERIGUAR-->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-  integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-  integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-</body>
-</html>
+    // Edit post functionality
+    $(document).on('click', '.edit-post', function(e) {
+        e.preventDefault();
+        var postId = $(this).data('post-id');
+        var postCard = $('#post-' + postId);
+        var postTitle = postCard.find('.card-title').text();
+        var postContent = postCard.find('.card-text').text();
+
+        $('#edit-title').val(postTitle);
+        $('#edit-message').val(postContent);
+        $('#edit-char-count-modal').text(postContent.length + ' / 650 caracteres');
+        $('#edit-conversation-form').attr('action', '/crece/post/' + postId + '/edit/');
+        $('#editPostModal').modal('show');
+    });
+
+    $('#edit-conversation-form').submit(function(e) {
+        e.preventDefault();
+        var title = $('#edit-title').val().trim();
+        var message = $('#edit-message').val().trim();
+        var actionUrl = $(this).attr('action');
+
+        if (title && message) {
+            $.post(actionUrl, {
+                title: title,
+                content: message,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            }).done(function(data) {
+                console.log("Response data: ", data);
+                if (data.success) {
+                    var updatedPost = `
+                        <div class="card-body">
+                            <h5 class="card-title">${data.title}</h5>
+                            <p class="card-text">${data.content}</p>
+                            <a href="/crece/post/${data.post_id}/" class="btn btn-secondary">Ver más</a>
+                            <a href="/crece/post/${data.post_id}/edit/" class="btn btn-primary edit-post" data-post-id="${data.post_id}">Editar</a>
+                            {% if user.is_superuser %}
+                                <a href="/crece/post/${data.post_id}/delete/" class="btn btn-danger delete-post" data-post-id="${data.post_id}">Eliminar</a>
+                            {% endif %}
+                        </div>
+                    `;
+                    $('#post-' + data.post_id).html(updatedPost);
+                    $('#editPostModal').modal('hide');  // Cerrar el modal
+                    $('#edit-conversation-form')[0].reset();  // Limpiar el formulario
+                    $('#edit-char-count-modal').text('0 / 650 caracteres');  // Restablecer el contador de caracteres
+                } else {
+                    alert("Ocurrió un error al guardar la publicación.");
+                }
+            }).fail(function(xhr, status, error) {
+                console.error("Error en la solicitud: ", xhr.responseText);
+                alert("Error en la solicitud: " + error);
+            });
+        } else {
+            alert("Ambos campos son obligatorios.");
+        }
+    });
+
+    $('#edit-message').on('input', function() {
+        var maxLength = $(this).attr('maxlength');
+        var currentLength = $(this).val().length;
+        $('#edit-char-count-modal').text(currentLength + ' / ' + maxLength + ' caracteres');
+    });
+
+    // Modal close button functionality
+    $('#editPostModal .btn-close').click(function() {
+        console.log("Modal close button clicked");
+        $('#editPostModal').modal('hide');
+    });
+
+    // Delete post functionality
+    $(document).on('click', '.delete-post', function(e) {
+        e.preventDefault();
+        if (confirm("¿Estás seguro de que deseas eliminar esta publicación?")) {
+            var postId = $(this).data('post-id');
+            var actionUrl = '/crece/post/' + postId + '/delete/';
+
+            $.post(actionUrl, {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            }).done(function(data) {
+                if (data.success) {
+                    $('#post-' + postId).remove();
+                } else {
+                    alert("Ocurrió un error al eliminar la publicación.");
+                }
+            }).fail(function(xhr, status, error) {
+                console.error("Error en la solicitud: ", xhr.responseText);
+                alert("Error en la solicitud: " + error);
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'crece/plantilla.html' %}
+{% load static %}
+{% block title %}FORO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'crece/css/estilo.css' %}">
+<style>
+    #comments-container {
+        background-color: rgba(255, 255, 255, 0.385); /* Blanco opaco */
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+    .comment {
+        margin: 5px;
+        color: black;
+    }
+</style>
+{% endblock %}
+{% block contenido %}
+<div class="container mt-5">
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+    <p>Publicado por: {{ post.author.username }}</p>
+    <p>Fecha de publicación: {{ post.created_at }}</p>
+    {% if post.author == user or user.is_superuser %}
+        <a href="{% url 'post_edit' post.pk %}" class="btn btn-primary">Editar</a>
+    {% endif %}
+    {% if user.is_superuser %}
+        <a href="{% url 'post_delete' post.pk %}" class="btn btn-danger">Eliminar</a>
+    {% endif %}
+
+    <hr>
+    <h2>Comentarios</h2>
+    <div id="comments-container">
+        {% for comment in post.comments.all %}
+            <div class="comment" style="color: black;">
+                <p>{{ comment.author }}: {{ comment.content }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Añadir comentario</button>
+        <button type="submit" class="btn btn-primary" id="btn-volver">Volver</button>
+    </form>
+    
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        console.log("JavaScript is loaded and running.");
+
+        $('#btn-volver').click(function() {
+            console.log("Button clicked");
+            window.location.href = "{% url 'foro' %}";
+        });
+    });
+</script>
+{% endblock %}
