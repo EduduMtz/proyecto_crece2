@@ -19,3 +19,10 @@ S.U Django:
 
 - User: admin
 - Pass: admin
+
+Usuario prueba foro:
+- User: skarleth
+- pass: 1234
+
+- User: Marco
+- pass: 1234
